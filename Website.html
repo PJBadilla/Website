@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Website</title>
+  <!-- Import Montserrat font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    /* Scrollbar styles for WebKit browsers */
+    body::-webkit-scrollbar {
+      width: 12px;
+    }
+    body::-webkit-scrollbar-track {
+      background: #2e2e2e;
+      border-radius: 6px;
+    }
+    body::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #6a11cb, #2575fc);
+      border-radius: 6px;
+      border: 3px solid #2e2e2e;
+    }
+    body::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, #2575fc, #6a11cb);
+    }
+    /* Scrollbar styles for Firefox */
+    body {
+      scrollbar-width: thin;
+      scrollbar-color: #6a11cb #2e2e2e;
+    }
+
+    html, body {
+      margin: 0; padding: 0; height: 100%;
+      font-family: Arial, sans-serif;
+      scroll-behavior: smooth;
+      background: #f5f5f5;
+    }
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 1;
+      background: black;
+    }
+    .hero video {
+      position: absolute;
+      top: 50%; left: 50%;
+      min-width: 100%; min-height: 100%;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    /* Top white bar with logo, text, and buttons */
+    .top-bar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 50px;
+      background: #ffffff;
+      box-sizing: border-box;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .top-bar .left-group {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .top-bar img {
+      height: 35px;
+      user-select: none;
+    }
+    .top-bar .group-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #000000;
+      user-select: none;
+    }
+    .top-bar .buttons {
+      display: flex;
+      gap: 12px;
+    }
+    .top-bar .buttons a {
+      background: #e0e0e0;
+      color: #000000;
+      padding: 6px 14px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.2;
+      display: flex;
+      align-items: center;
+      height: 34px;
+      box-sizing: border-box;
+      user-select: none;
+      transition: background-color 0.3s;
+    }
+    .top-bar .buttons a:hover {
+      background: #c0c0c0;
+    }
+
+    /* Main nav bar black, taller */
+    nav.main-nav {
+      position: fixed;
+      top: 50px;
+      width: 100%;
+      height: 70px;
+      background: #000000;
+      box-sizing: border-box;
+      padding: 0 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      z-index: 999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    nav.main-nav.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .main-nav .nav-links {
+      display: flex;
+      gap: 20px;
+      flex-direction: row-reverse;
+      margin: 0;
+    }
+    .main-nav .nav-links a {
+      background: #333333;
+      color: #ffffff;
+      padding: 8px 18px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      line-height: 1.2;
+      display: flex;
+      align-items: center;
+      height: 40px;
+      box-sizing: border-box;
+      user-select: none;
+      transition: background-color 0.3s;
+    }
+    .main-nav .nav-links a:hover {
+      background: #555555;
+    }
+
+    /* Centered "website" text */
+    .website-text {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 5rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-align: center;
+      z-index: 20;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* Introduction section */
+    #introduction {
+      padding: 100px 40px 60px 40px;
+      background: #f5f5f5;
+      color: #333333;
+      font-family: 'Montserrat', sans-serif;
+      min-height: 80vh;
+      position: relative;
+      z-index: 2;
+    }
+    #introduction h2 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #000000;
+      text-align: center;
+    }
+    #introduction p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 0 auto 40px auto;
+      text-align: center;
+    }
+
+    /* Image grid container */
+    .image-grid {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Top row: 4 images, simple flex */
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+
+    /* Bottom row: 3 images centered */
+    .bottom-row {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+    }
+
+    /* Each image box */
+    .image-box {
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .image-box img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: block;
+      margin: 0 auto 12px auto;
+      user-select: none;
+    }
+    .image-box .name {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #222222;
+      user-select: none;
+    }
+
+    /* Responsive for smaller screens */
+    @media (max-width: 768px) {
+      .top-row, .bottom-row {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+      }
+      .image-box img {
+        width: 120px;
+        height: 120px;
+      }
+    }
+
+    /* Poems section base style with spicy designs */
+    #poems {
+      padding: 100px 40px 60px 40px;
+      max-width: 900px;
+      margin: 0 auto 60px auto;
+      font-family: 'Montserrat', sans-serif;
+      color: #333333;
+      min-height: 80vh;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    #poems.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    #poems h2 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #000000;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      display: inline-block;
+    }
+    #poems h2::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 6px;
+      background: linear-gradient(90deg, #ff5f6d, #ffc371);
+      border-radius: 3px;
+      margin: 10px auto 0 auto;
+      opacity: 0.8;
+    }
+    #poems p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #poems::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle at center, #ff5f6d55, #ffc37100);
+      border-radius: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Members section */
+    #members {
+      padding: 100px 40px 60px 40px;
+      max-width: 900px;
+      margin: 0 auto 60px auto;
+      font-family: 'Montserrat', sans-serif;
+      color: #333333;
+      min-height: 80vh;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    #members.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    #members h2 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: #000000;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      display: inline-block;
+    }
+    #members h2::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 6px;
+      background: linear-gradient(90deg, #ff5f6d, #ffc371);
+      border-radius: 3px;
+      margin: 10px auto 0 auto;
+      opacity: 0.8;
+    }
+    #members ul {
+      list-style: none;
+      padding: 0;
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1.2rem;
+      color: #222222;
+    }
+    #members ul li {
+      background: #e0e0e0;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    #members ul li span.name-role {
+      font-weight: 700;
+    }
+    #members ul li a.poem-link {
+      background: #333333;
+      color: #fff;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: background-color 0.3s;
+    }
+    #members ul li a.poem-link:hover {
+      background: #555555;
+    }
+
+    /* Footer black bar */
+    footer.footer-bar {
+      width: 100%;
+      height: 100px;
+      background: #000000;
+      box-sizing: border-box;
+      margin-top: 40px;
+      z-index: 5;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero" id="home">
+    <video autoplay muted loop>
+      <source src="bookshot.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+
+    <div class="top-bar">
+      <div class="left-group">
+        <img src="logo.png" alt="Logo" />
+        <div class="group-text">English Group 2</div>
+      </div>
+      <div class="buttons">
+        <a href="#home">Home</a>
+        <a href="#introduction">Introduction</a>
+        <a href="#poems">Poems</a>
+        <a href="#members">Members Work</a>
+      </div>
+    </div>
+
+    <nav class="main-nav">
+      <div class="nav-links">
+        <a href="jhandewebsite.html" class="poem-link" target="_blank" rel="noopener noreferrer">Jhande</a>
+        <a href="Rainewebsite.html" class="poem-link" target="_blank" rel="noopener noreferrer">Raine</a>
+        <a href="Juliannewebsite.html" class="poem-link" target="_blank" rel="noopener noreferrer">Julianne</a>
+        <a href="PJwebsite.html" class="poem-link" target="_blank" rel="noopener noreferrer">PJ</a>
+        <a href="Kentwebsite.html" class="poem-link" target="_blank" rel="noopener noreferrer">Kent</a>
+        <a href="Liamwebsite.html" class="poem-link" target="_blank" rel="noopener noreferrer">Liam</a>
+        <a href="Arianewebsite.html" class="poem-link" target="_blank" rel="noopener noreferrer">Ariane</a>
+      </div>
+    </nav>
+
+    <div class="website-text">website</div>
+  </div>
+
+  <section id="introduction">
+    <h2>Introduction to Our Group</h2>
+    <p>
+      Welcome to English Group 2! We are a passionate team dedicated to learning, growing, and collaborating.
+      Our group values creativity, respect, and teamwork as we work together on various projects.
+      Feel free to explore our website to learn more about what we do and how we support each other.
+    </p>
+
+    <div class="image-grid">
+      <div class="top-row">
+        <div class="image-box">
+          <img src="Jhande.jpg" alt="Jhande" />
+          <div class="name">Jhande</div>
+        </div>
+        <div class="image-box">
+          <img src="Raine2.jpg" alt="Raine" />
+          <div class="name">Raine</div>
+        </div>
+        <div class="image-box">
+          <img src="Julianne.jpg" alt="Julianne" />
+          <div class="name">Julianne</div>
+        </div>
+        <div class="image-box">
+          <img src="PJ.jpg" alt="PJ" />
+          <div class="name">PJ</div>
+        </div>
+      </div>
+      <div class="bottom-row">
+        <div class="image-box">
+          <img src="Kent.jpg" alt="Kent" />
+          <div class="name">Kent</div>
+        </div>
+        <div class="image-box">
+          <img src="Liam.jpg" alt="Liam" />
+          <div class="name">Liam</div>
+        </div>
+        <div class="image-box">
+          <img src="Ariane2.jpg" alt="Ariane" />
+          <div class="name">Ariane</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Poems Section -->
+  <section id="poems">
+    <h2>What Are Poems?</h2>
+    <p>
+      Poems are a form of literary art that express ideas, feelings, or tell stories using carefully chosen words, rhythm, and sometimes rhyme. They often use metaphor, simile, and other figurative language to create vivid imagery and evoke emotions.
+    </p>
+    <p>
+      Poetry can be structured with specific rules, like sonnets or haikus, or be freeform with no fixed pattern. It has been used for centuries to communicate human experience in a powerful and creative way.
+    </p>
+  </section>
+
+  <!-- Members Work Section -->
+  <section id="members">
+    <h2>Members Work</h2>
+    <ul>
+      <li>
+        <span class="name-role">Jhande — Leader</span>
+        <a href="jhandewebsite.html" class="poem-link" target="_blank" rel="noopener noreferrer">View Poems</a>
+      </li>
+      <li>
+        <span class="name-role">Raine — Assistant Leader</span>
+        <a href="Rainewebsite.html" class="poem-link" target="_blank" rel="noopener noreferrer">View Poems</a>
+      </li>
+      <li>
+        <span class="name-role">Julianne — Secretary</span>
+        <a href="Juliannewebsite.html" class="poem-link" target="_blank" rel="noopener noreferrer">View Poems</a>
+      </li>
+      <li>
+        <span class="name-role">PJ — Member</span>
+        <a href="PJwebsite.html" class="poem-link" target="_blank" rel="noopener noreferrer">View Poems</a>
+      </li>
+      <li>
+        <span class="name-role">Kent — Member</span>
+        <a href="Kentwebsite.html" class="poem-link" target="_blank" rel="noopener noreferrer">View Poems</a>
+      </li>
+      <li>
+        <span class="name-role">Liam — Member</span>
+        <a href="Liamwebsite.html" class="poem-link" target="_blank" rel="noopener noreferrer">View Poems</a>
+      </li>
+      <li>
+        <span class="name-role">Ariane — Member</span>
+        <a href="Arianewebsite.html" class="poem-link" target="_blank" rel="noopener noreferrer">View Poems</a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Black footer bar -->
+  <footer class="footer-bar">
+    <!-- You can add footer content here later -->
+  </footer>
+
+  <script>
+    // Show/hide black nav bar based on scroll position
+    const mainNav = document.querySelector('nav.main-nav');
+    const hero = document.querySelector('.hero');
+
+    function checkScroll() {
+      const scrollY = window.scrollY || window.pageYOffset;
+      if (scrollY < hero.offsetHeight - 60) { // Show nav on home
+        mainNav.classList.remove('hidden');
+      } else {
+        mainNav.classList.add('hidden');
+      }
+    }
+
+    window.addEventListener('scroll', checkScroll);
+    window.addEventListener('load', checkScroll);
+
+    // Fade-in poems and members sections on scroll
+    const poemsSection = document.getElementById('poems');
+    const membersSection = document.getElementById('members');
+
+    function fadeInOnScroll() {
+      const triggerBottom = window.innerHeight * 0.85;
+
+      const poemsTop = poemsSection.getBoundingClientRect().top;
+      if (poemsTop < triggerBottom) {
+        poemsSection.classList.add('visible');
+      }
+
+      const membersTop = membersSection.getBoundingClientRect().top;
+      if (membersTop < triggerBottom) {
+        membersSection.classList.add('visible');
+      }
+    }
+
+    window.addEventListener('scroll', fadeInOnScroll);
+    window.addEventListener('load', fadeInOnScroll);
+  </script>
+</body>
+</html>
