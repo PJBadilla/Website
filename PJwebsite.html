@@ -87,7 +87,7 @@
       overflow: hidden;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       transition: transform 0.3s ease;
-      cursor: default;
+      cursor: pointer; /* <-- clickable now */
     }
     .poem-box:hover {
       transform: translateY(-5px);
@@ -105,6 +105,52 @@
       font-size: 1.3rem;
       color: #222;
       user-select: none;
+    }
+
+    /* Poem popup (modal) */
+    .poem-popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      z-index: 2000;
+    }
+    .poem-popup.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .poem-content {
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      transform: translateY(30px);
+      transition: transform 0.4s ease;
+    }
+    .poem-popup.active .poem-content {
+      transform: translateY(0);
+    }
+    .close-btn {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      transition: color 0.3s;
+    }
+    .close-btn:hover {
+      color: #ff5f6d;
     }
 
     .other-members {
@@ -142,28 +188,26 @@
   </style>
 </head>
 <body>
-  <nav class="main-nav">
-    <!-- No buttons/links here -->
-  </nav>
+  <nav class="main-nav"></nav>
 
   <a href="index.html" class="back-button" aria-label="Back to main website" title="Back to Home">&#8592;</a>
 
   <div class="content">
     <h1>PJ's Poems</h1>
     <div class="poems-grid">
-      <div class="poem-box">
+      <div class="poem-box" onclick="openPoem('poem1')">
         <img src="poem1.jpg" alt="Poem 1" />
         <div class="poem-title">Buntod Reef, The Place You'll Love To Be</div>
       </div>
-      <div class="poem-box">
+      <div class="poem-box" onclick="openPoem('poem2')">
         <img src="poem2.jpg" alt="Poem 2" />
         <div class="poem-title">Takanashi Hoshino</div>
       </div>
-      <div class="poem-box">
+      <div class="poem-box" onclick="openPoem('poem3')">
         <img src="poem3.jpg" alt="Poem 3" />
         <div class="poem-title">Cherry Wine</div>
       </div>
-      <div class="poem-box">
+      <div class="poem-box" onclick="openPoem('poem4')">
         <img src="poem4.jpg" alt="Poem 4" />
         <div class="poem-title">Kivotos: The World Of Chaos</div>
       </div>
@@ -178,7 +222,47 @@
       <a href="Arianewebsite.html">Ariane</a>
     </div>
   </div>
+
+  <!-- Poem popups -->
+  <div id="poem1" class="poem-popup">
+    <div class="poem-content">
+      <span class="close-btn" onclick="closePoem()">&times;</span>
+      <h2>Buntod Reef, The Place You'll Love To Be</h2>
+      <p>🌊 Insert the full poem text here 🌊</p>
+    </div>
+  </div>
+
+  <div id="poem2" class="poem-popup">
+    <div class="poem-content">
+      <span class="close-btn" onclick="closePoem()">&times;</span>
+      <h2>Takanashi Hoshino</h2>
+      <p>⭐ Insert the full poem text here ⭐</p>
+    </div>
+  </div>
+
+  <div id="poem3" class="poem-popup">
+    <div class="poem-content">
+      <span class="close-btn" onclick="closePoem()">&times;</span>
+      <h2>Cherry Wine</h2>
+      <p>🍒 Insert the full poem text here 🍒</p>
+    </div>
+  </div>
+
+  <div id="poem4" class="poem-popup">
+    <div class="poem-content">
+      <span class="close-btn" onclick="closePoem()">&times;</span>
+      <h2>Kivotos: The World Of Chaos</h2>
+      <p>🔥 Insert the full poem text here 🔥</p>
+    </div>
+  </div>
+
+  <script>
+    function openPoem(id) {
+      document.getElementById(id).classList.add('active');
+    }
+    function closePoem() {
+      document.querySelectorAll('.poem-popup').forEach(p => p.classList.remove('active'));
+    }
+  </script>
 </body>
-
 </html>
-
