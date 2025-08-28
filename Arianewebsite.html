@@ -3,36 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <title>Ariane's Poems</title>
-  <!-- Import Montserrat font -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet" />
   <style>
     html, body {
-      margin: 0; padding: 0; min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
       font-family: 'Montserrat', sans-serif;
       background: #fff;
       color: #222;
       scroll-behavior: smooth;
     }
-    /* Permanent black nav bar without buttons */
     nav.main-nav {
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 60px;
       background: #000;
       box-sizing: border-box;
       padding: 0 40px;
       display: flex;
-      justify-content: center; /* no content but keep nav height */
+      justify-content: center;
       align-items: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.5);
       z-index: 1000;
     }
-
-    /* Back arrow only - big and bold, no box */
     .back-button {
       position: fixed;
-      top: 60px; /* below nav bar */
+      top: 60px;
       left: 20px;
       font-size: 3rem;
       font-weight: 900;
@@ -47,17 +46,12 @@
       align-items: center;
       justify-content: center;
     }
-    .back-button:hover {
-      color: #ff5f6d;
-    }
-
-    /* Page content */
+    .back-button:hover { color: #ff5f6d; }
     .content {
       max-width: 900px;
-      margin: 140px auto 60px; /* below nav and back arrow */
+      margin: 140px auto 60px;
       padding: 0 20px;
     }
-
     h1 {
       font-weight: 700;
       font-size: 2.8rem;
@@ -76,15 +70,12 @@
       margin: 10px auto 0;
       opacity: 0.8;
     }
-
-    /* Poems grid: 2 top, 2 bottom */
     .poems-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 40px;
       margin-bottom: 60px;
     }
-
     .poem-box {
       text-align: center;
       background: #fafafa;
@@ -92,7 +83,7 @@
       overflow: hidden;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       transition: transform 0.3s ease;
-      cursor: default;
+      cursor: pointer;
     }
     .poem-box:hover {
       transform: translateY(-5px);
@@ -112,7 +103,55 @@
       user-select: none;
     }
 
-    /* Other members links */
+    /* Poem popup (modal) */
+    .poem-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      z-index: 2000;
+    }
+    .poem-popup.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .poem-content {
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      transform: translateY(30px);
+      transition: transform 0.4s ease;
+      max-height: 80vh; /* keeps long poems scrollable */
+      overflow-y: auto;
+      position: relative;
+    }
+    .poem-popup.active .poem-content {
+      transform: translateY(0);
+    }
+    .close-btn {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      transition: color 0.3s;
+    }
+    .close-btn:hover { color: #ff5f6d; }
+
     .other-members {
       max-width: 700px;
       margin: 0 auto;
@@ -136,43 +175,34 @@
       color: #b3302a;
     }
 
-    /* Responsive */
     @media (max-width: 600px) {
-      .poems-grid {
-        grid-template-columns: 1fr;
-      }
-      .back-button {
-        left: 15px;
-        font-size: 2.5rem;
-      }
+      .poems-grid { grid-template-columns: 1fr; }
+      .back-button { left: 15px; font-size: 2.5rem; }
     }
   </style>
 </head>
 <body>
-  <nav class="main-nav">
-    <!-- No buttons/links here -->
-  </nav>
-
+  <nav class="main-nav"></nav>
   <a href="index.html" class="back-button" aria-label="Back to main website" title="Back to Home">&#8592;</a>
 
   <div class="content">
     <h1>Ariane's Poems</h1>
     <div class="poems-grid">
-      <div class="poem-box">
+      <div class="poem-box" onclick="openPoem('poem1')">
         <img src="poem1.jpg" alt="Poem 1" />
-        <div class="poem-title">Titleholder</div>
+        <div class="poem-title">Buntod Ree: The Place You'll Love To Be</div>
       </div>
-      <div class="poem-box">
+      <div class="poem-box" onclick="openPoem('poem2')">
         <img src="poem2.jpg" alt="Poem 2" />
-        <div class="poem-title">Titleholder</div>
+        <div class="poem-title">The Silent Blade</div>
       </div>
-      <div class="poem-box">
+      <div class="poem-box" onclick="openPoem('poem3')">
         <img src="poem3.jpg" alt="Poem 3" />
-        <div class="poem-title">Titleholder</div>
+        <div class="poem-title">Underneath the Blossom Tree: A Wish for Joyful Laughs</div>
       </div>
-      <div class="poem-box">
+      <div class="poem-box" onclick="openPoem('poem4')">
         <img src="poem4.jpg" alt="Poem 4" />
-        <div class="poem-title">Titleholder</div>
+        <div class="poem-title">The Poet's Unwritten Verse</div>
       </div>
     </div>
 
@@ -185,6 +215,145 @@
       <a href="Liamwebsite.html">Liam</a>
     </div>
   </div>
-</body>
 
+  <!-- Poem popups -->
+  <div id="poem1" class="poem-popup" onclick="overlayClose(event)">
+    <div class="poem-content">
+      <span class="close-btn" onclick="closePoem()">&times;</span>
+      <h2>Buntod Reef, The Place You'll Love To Be</h2>
+      <p>A destination, calm and bright, Sunrise comes up, a glorious light. Clear skies above, a sunlit scene, Buntod's beaches, pristine and keen.</p>
+      <p>I love the breeze, the skies so blue, The mangroves strong, the waters true. Each wave that splashes on the sand, Feels like a hug from nature's hand.</p>
+      <p>It's calm, it's pure—so full of life, A break from noise,from stress and strife. Buntod's beauty speaks to me, A home of hope beneath the sea.</p>
+    </div>
+  </div>
+
+  <div id="poem2" class="poem-popup" onclick="overlayClose(event)">
+    <div class="poem-content">
+      <span class="close-btn" onclick="closePoem()">&times;</span>
+      <h2>Takanashi Hoshino</h2>
+      <!-- (long poem content kept the same as yours) -->
+      <p>
+        The student from abydos,
+        The vice president of the student council
+        The president of the countermeasures committee
+        The one said and feared to be the strongest.
+      </p>
+      <p>
+        Takanashi Hoshino, a koala in her school,
+        Always sleepy, but never a fool.
+        She smiles as if the world is light,
+        But inside, she's tired from every fight.
+      </p>
+      <p>
+        She wasn't always calm and slow,
+        Her wrath once even made anger bow.
+        She worked the hardest, gave her all,
+        Until her senior took the fall.
+      </p>
+      <p>
+        Kunichinashi Yume, the one who had led,
+        With carefree smiles and jokes she said.
+        But hoshino stood to guard her side,
+        As they fought to keep their school alive
+      </p>
+      <p>
+        Before the great sandstorm,
+        Abydos high was known as the strongest.
+        But after the tradegy, everything changed,
+        And the students were left to pay the debt.
+      </p>
+      <p>
+        Eventually the students left one by ome,
+        Until only two were left under the sun.
+        They faced the debt, the lose, the fight,
+        Holding each other through the endless night.
+      </p>
+      <p>
+        But even the strongest hearts can fade,
+        And Yume's light began to shade.
+        No final words, no last goodbye,
+        Just silence underneath the sky.
+      </p>
+      <p>
+        With long ponytail pink hair and sleep eyes,
+        She wears her shades beneath the skies.
+        A coat uniform without a coat. a charm so still,
+        Yet hides strenght and iron will.
+      </p>
+      <p>
+        Hoshino was left with all the pain,
+        The heavy storms, the endless rain.
+        She laughed to hide the scars inside,
+        And led alone, though part of her died.
+      </p>
+      <p>
+        Now in her third and final year,
+        She hides her doubts and swallows fear.
+        With tired eyes, she stands ahead,
+        to guide her juniors in Yume's Stead
+      </p>
+      <P>
+        She tried to act like all was fine,
+        A leader brave, a steady sign.
+        But when her friend was pulled away,
+        Her calm began to slip and sway.
+      </P>
+      <p>
+        she snapped beneath the weight she bore,
+        Her warmth replaced by something more.
+        A storm awakened in her soul,
+        That even she could not control.
+      </p>
+      <p>
+        But hands reached out and pulled her near,
+        The voices of her friends sincere.
+        She faced her pain, stood up once more,
+        The Hoshino her juniors swore.
+      </p>
+      <p>
+        She stood where storms had once begun,
+        No longer just a girl who'd run.
+        With wounds still fresh, she chose to lead,
+        A shield for those who still believe.
+      </p>
+    </div>
+  </div>
+
+  <div id="poem3" class="poem-popup" onclick="overlayClose(event)">
+    <div class="poem-content">
+      <span class="close-btn" onclick="closePoem()">&times;</span>
+      <h2>Cherry Wine</h2>
+      <p>Why are you standing all by youreself? ...</p>
+    </div>
+  </div>
+
+  <div id="poem4" class="poem-popup" onclick="overlayClose(event)">
+    <div class="poem-content">
+      <span class="close-btn" onclick="closePoem()">&times;</span>
+      <h2>Kivotos: The World Of Chaos</h2>
+      <p>Kivotos, a place that embodies chaos...</p>
+    </div>
+  </div>
+
+  <script>
+    function openPoem(id) {
+      const popup = document.getElementById(id);
+      popup.classList.add('active');
+      // reset scroll to top when opening
+      const content = popup.querySelector('.poem-content');
+      if (content) content.scrollTop = 0;
+    }
+
+    function closePoem() {
+      document.querySelectorAll('.poem-popup').forEach(p => p.classList.remove('active'));
+    }
+
+    function overlayClose(event) {
+      // close only if background (overlay) clicked, not content
+      if (event.target.classList.contains('poem-popup')) {
+        closePoem();
+      }
+    }
+  </script>
+</body>
 </html>
