@@ -2,37 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Julianna's Poems</title>
-  <!-- Import Montserrat font -->
+  <title>Jullianne's Poems</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet" />
   <style>
     html, body {
-      margin: 0; padding: 0; min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
       font-family: 'Montserrat', sans-serif;
       background: #fff;
       color: #222;
       scroll-behavior: smooth;
     }
-    /* Permanent black nav bar without buttons */
     nav.main-nav {
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 60px;
       background: #000;
       box-sizing: border-box;
       padding: 0 40px;
       display: flex;
-      justify-content: center; /* no content but keep nav height */
+      justify-content: center;
       align-items: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.5);
       z-index: 1000;
     }
-
-    /* Back arrow only - big and bold, no box */
     .back-button {
       position: fixed;
-      top: 60px; /* below nav bar */
+      top: 60px;
       left: 20px;
       font-size: 3rem;
       font-weight: 900;
@@ -47,17 +46,12 @@
       align-items: center;
       justify-content: center;
     }
-    .back-button:hover {
-      color: #ff5f6d;
-    }
-
-    /* Page content */
+    .back-button:hover { color: #ff5f6d; }
     .content {
       max-width: 900px;
-      margin: 140px auto 60px; /* below nav and back arrow */
+      margin: 140px auto 60px;
       padding: 0 20px;
     }
-
     h1 {
       font-weight: 700;
       font-size: 2.8rem;
@@ -76,15 +70,12 @@
       margin: 10px auto 0;
       opacity: 0.8;
     }
-
-    /* Poems grid: 2 top, 2 bottom */
     .poems-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 40px;
       margin-bottom: 60px;
     }
-
     .poem-box {
       text-align: center;
       background: #fafafa;
@@ -92,7 +83,7 @@
       overflow: hidden;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       transition: transform 0.3s ease;
-      cursor: default;
+      cursor: pointer;
     }
     .poem-box:hover {
       transform: translateY(-5px);
@@ -112,7 +103,55 @@
       user-select: none;
     }
 
-    /* Other members links */
+    /* Poem popup (modal) */
+    .poem-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      z-index: 2000;
+    }
+    .poem-popup.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .poem-content {
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      transform: translateY(30px);
+      transition: transform 0.4s ease;
+      max-height: 80vh; /* keeps long poems scrollable */
+      overflow-y: auto;
+      position: relative;
+    }
+    .poem-popup.active .poem-content {
+      transform: translateY(0);
+    }
+    .close-btn {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      transition: color 0.3s;
+    }
+    .close-btn:hover { color: #ff5f6d; }
+
     .other-members {
       max-width: 700px;
       margin: 0 auto;
@@ -136,41 +175,32 @@
       color: #b3302a;
     }
 
-    /* Responsive */
     @media (max-width: 600px) {
-      .poems-grid {
-        grid-template-columns: 1fr;
-      }
-      .back-button {
-        left: 15px;
-        font-size: 2.5rem;
-      }
+      .poems-grid { grid-template-columns: 1fr; }
+      .back-button { left: 15px; font-size: 2.5rem; }
     }
   </style>
 </head>
 <body>
-  <nav class="main-nav">
-    <!-- No buttons/links here -->
-  </nav>
-
+  <nav class="main-nav"></nav>
   <a href="index.html" class="back-button" aria-label="Back to main website" title="Back to Home">&#8592;</a>
 
   <div class="content">
-    <h1>Julianne's Poems</h1>
+    <h1>Julliana's Poems</h1>
     <div class="poems-grid">
-      <div class="poem-box">
+      <div class="poem-box" onclick="openPoem('poem1')">
         <img src="poem1.jpg" alt="Poem 1" />
         <div class="poem-title">Titleholder</div>
       </div>
-      <div class="poem-box">
+      <div class="poem-box" onclick="openPoem('poem2')">
         <img src="poem2.jpg" alt="Poem 2" />
         <div class="poem-title">Titleholder</div>
       </div>
-      <div class="poem-box">
+      <div class="poem-box" onclick="openPoem('poem3')">
         <img src="poem3.jpg" alt="Poem 3" />
         <div class="poem-title">Titleholder</div>
       </div>
-      <div class="poem-box">
+      <div class="poem-box" onclick="openPoem('poem4')">
         <img src="poem4.jpg" alt="Poem 4" />
         <div class="poem-title">Titleholder</div>
       </div>
@@ -185,6 +215,59 @@
       <a href="Arianewebsite.html">Ariane</a>
     </div>
   </div>
+
+  <!-- Poem popups -->
+  <div id="poem1" class="poem-popup" onclick="overlayClose(event)">
+    <div class="poem-content">
+      <span class="close-btn" onclick="closePoem()">&times;</span>
+      <h2>Titleholder</h2>
+      <p> "Poem Contents"</p>
+    </div>
+  </div>
+
+  <div id="poem2" class="poem-popup" onclick="overlayClose(event)">
+    <div class="poem-content">
+      <span class="close-btn" onclick="closePoem()">&times;</span>
+      <h2>Titleholder</h2>
+      <p> "Poem Contents"</p>
+    </div>
+  </div>
+
+  <div id="poem3" class="poem-popup" onclick="overlayClose(event)">
+    <div class="poem-content">
+      <span class="close-btn" onclick="closePoem()">&times;</span>
+      <h2>Titleholder</h2>
+      <p> "Poem Contents"</p>
+    </div>
+  </div>
+
+  <div id="poem4" class="poem-popup" onclick="overlayClose(event)">
+    <div class="poem-content">
+      <span class="close-btn" onclick="closePoem()">&times;</span>
+      <h2>Titleholder</h2>
+      <p> "Poem Contents"</p>
+    </div>
+  </div>
+
+  <script>
+    function openPoem(id) {
+      const popup = document.getElementById(id);
+      popup.classList.add('active');
+      // reset scroll to top when opening
+      const content = popup.querySelector('.poem-content');
+      if (content) content.scrollTop = 0;
+    }
+
+    function closePoem() {
+      document.querySelectorAll('.poem-popup').forEach(p => p.classList.remove('active'));
+    }
+
+    function overlayClose(event) {
+      // close only if background (overlay) clicked, not content
+      if (event.target.classList.contains('poem-popup')) {
+        closePoem();
+      }
+    }
+  </script>
 </body>
 </html>
-
