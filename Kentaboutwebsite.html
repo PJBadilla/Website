@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>About Me - Kent</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      font-family: 'Montserrat', sans-serif;
+      background: #fff;
+      color: #222;
+      scroll-behavior: smooth;
+    }
+
+    nav.main-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+      z-index: 1000;
+    }
+
+    .back-button {
+      position: fixed;
+      top: 60px;
+      left: 20px;
+      font-size: 3rem;
+      font-weight: 900;
+      color: #000;
+      cursor: pointer;
+      user-select: none;
+      z-index: 1000;
+      text-decoration: none;
+      line-height: 1;
+      transition: color 0.3s;
+    }
+    .back-button:hover { color: #ff5f6d; }
+
+    .content {
+      max-width: 1000px;
+      margin: 140px auto 60px;
+      padding: 0 20px;
+    }
+
+    .about-container {
+      display: flex;
+      background: #fafafa;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .about-image {
+      flex: 1;
+      background: #ddd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+
+    .about-image img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 20px;
+      object-fit: cover;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    }
+
+    .about-info {
+      flex: 2;
+      padding: 40px;
+    }
+
+    .about-info h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      color: #000;
+    }
+
+    .about-info p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .about-info a {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #000;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 20px;
+      transition: background 0.3s;
+      font-weight: 700;
+    }
+    .about-info a:hover { background: #333; }
+
+    .quarter-section {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+    .about-title {
+      font-size: 3rem;
+      font-weight: 700;
+      text-align: center;
+      margin: 30px 0 40px 0;
+      color: #000;
+    }
+    .quarter-bar {
+      display: flex;
+      gap: 15px;
+      justify-content: flex-start;
+    }
+
+    .quarter-bar a {
+      padding: 8px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: #000;
+      font-weight: 600;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .quarter-bar a.active {
+      background: #000;
+      color: #fff;
+    }
+
+    .quarters-container {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      max-width: 1000px;
+      margin-top: 15px;
+      border-radius: 20px;
+    }
+
+    .quarter {
+      flex: 0 0 100%;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column; 
+      align-items: flex start;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding: 40px;
+      background: transparent;
+    }
+    .quarter p {
+      margin: 2px 0;
+      margin-left: 10px;
+      margin-right: 10px;  
+      line-height: 1.2;   
+      word-spacing: -2px;    
+    }
+    .status-value {
+      padding-left: 20px;
+    }
+
+  </style>
+</head>
+<body>
+  <nav class="main-nav"></nav>
+  <a href="index.html" class="back-button" aria-label="Back to main website" title="Back to Home">&#8592;</a>
+
+  <div class="content">
+    <h1 class = "about-title">About Me</h1>
+
+    <div class="about-container">
+      <div class="about-image">
+        <img src="Kent.jpg" alt="Kent">
+      </div>
+      <div class="about-info">
+        <h1>Kent</h1>
+        <p>
+          "Placeholder"
+        </p>
+      </div>
+    </div>
+
+    <div class="quarter-section">
+      <div class="quarter-bar">
+        <a href="#q1" class="active">Q1</a>
+        <a href="#q2">Q2</a>
+        <a href="#q3">Q3</a>
+        <a href="#q4">Q4</a>
+      </div>
+
+    <div class="quarters-container" id="quarters">
+      <div class="quarter" id="q1">
+        <p>Current Status:</p> 
+        <p class = "status-value">Member</p>
+      </div>
+      <div class="quarter" id="q2">
+        <p>Current Status:</p>
+        <p class = "status-value">Secretary</p>
+      </div>
+      <div class="quarter" id="q3">
+        <p>Current Status:</p>
+        <p class = "status-value">Upcoming</p>
+      </div>
+      <div class="quarter" id="q4">
+        <p>Current Status:</p>
+        <p class = "status-value">Upcoming</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const quarters = document.querySelectorAll(".quarter");
+    const navLinks = document.querySelectorAll(".quarter-bar a");
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => link.classList.remove("active"));
+          document.querySelector(`.quarter-bar a[href="#${entry.target.id}"]`).classList.add("active");
+        }
+      });
+    }, { threshold: 0.6 });
+
+    quarters.forEach(q => observer.observe(q));
+  </script>
+</body>
+</html>
