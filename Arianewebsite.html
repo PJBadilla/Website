@@ -2,208 +2,145 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Ariane's Poems</title>
+  <title>Ariane's Work</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet" />
   <style>
     html, body {
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
+      margin: 0; padding: 0; min-height: 100vh;
       font-family: 'Montserrat', sans-serif;
-      background: #fff;
-      color: #222;
+      background: #fff; color: #222;
       scroll-behavior: smooth;
     }
     nav.main-nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 60px;
-      background: #000;
-      box-sizing: border-box;
-      padding: 0 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-      z-index: 1000;
+      position: fixed; top: 0; left: 0; width: 100%; height: 60px;
+      background: #000; display: flex; justify-content: center; align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5); z-index: 1000;
     }
     .back-button {
-      position: fixed;
-      top: 60px;
-      left: 20px;
-      font-size: 3rem;
-      font-weight: 900;
-      color: #000;
-      cursor: pointer;
-      user-select: none;
-      z-index: 1000;
-      text-decoration: none;
-      line-height: 1;
-      transition: color 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: fixed; top: 60px; left: 20px;
+      font-size: 3rem; font-weight: 900; color: #000;
+      cursor: pointer; user-select: none; z-index: 1000;
+      text-decoration: none; line-height: 1;
+      transition: color 0.3s; display: flex;
+      align-items: center; justify-content: center;
     }
     .back-button:hover { color: #ff5f6d; }
     .content {
-      max-width: 900px;
-      margin: 140px auto 60px;
-      padding: 0 20px;
+      max-width: 900px; margin: 140px auto 60px; padding: 0 20px;
     }
     h1 {
-      font-weight: 700;
-      font-size: 2.8rem;
-      margin-bottom: 30px;
-      text-align: center;
-      color: #000;
-      position: relative;
+      font-weight: 700; font-size: 2.8rem; margin-bottom: 30px;
+      text-align: center; color: #000; position: relative;
     }
     h1::after {
-      content: "";
-      display: block;
-      width: 60px;
-      height: 6px;
+      content: ""; display: block; width: 60px; height: 6px;
       background: linear-gradient(90deg, #ff5f6d, #ffc371);
-      border-radius: 3px;
-      margin: 10px auto 0;
-      opacity: 0.8;
+      border-radius: 3px; margin: 10px auto 0; opacity: 0.8;
     }
     .poems-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 40px;
-      margin-bottom: 60px;
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 40px; margin-bottom: 60px;
     }
     .poem-box {
-      text-align: center;
-      background: #fafafa;
-      border-radius: 15px;
-      overflow: hidden;
+      text-align: center; background: #fafafa;
+      border-radius: 15px; overflow: hidden;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-      cursor: pointer;
+      transition: transform 0.3s ease; cursor: pointer;
     }
-    .poem-box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-    }
-    .poem-box img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      display: block;
-    }
-    .poem-title {
-      padding: 15px 10px;
-      font-weight: 700;
-      font-size: 1.3rem;
-      color: #222;
-      user-select: none;
-    }
+    .poem-box:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.2); }
+    .poem-box img { width: 100%; height: 180px; object-fit: cover; display: block; }
+    .poem-title { padding: 15px 10px; font-weight: 700; font-size: 1.3rem; color: #222; user-select: none; }
 
-    /* Poem popup (modal) */
     .poem-popup {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease;
-      z-index: 2000;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.4s ease; z-index: 2000;
     }
-    .poem-popup.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .poem-popup.active { opacity: 1; pointer-events: auto; }
     .poem-content {
-      background: #fff;
-      border-radius: 20px;
-      padding: 30px;
-      max-width: 600px;
-      width: 90%;
-      text-align: center;
+      background: #fff; border-radius: 20px; padding: 30px;
+      max-width: 600px; width: 90%; text-align: center;
       box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-      transform: translateY(30px);
-      transition: transform 0.4s ease;
-      max-height: 80vh; /* keeps long poems scrollable */
-      overflow-y: auto;
-      position: relative;
+      transform: translateY(30px); transition: transform 0.4s ease;
+      max-height: 80vh; overflow-y: auto; position: relative;
     }
-    .poem-popup.active .poem-content {
-      transform: translateY(0);
-    }
+    .poem-popup.active .poem-content { transform: translateY(0); }
     .close-btn {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #333;
-      cursor: pointer;
-      position: absolute;
-      top: 20px;
-      right: 30px;
+      font-size: 2rem; font-weight: bold; color: #333;
+      cursor: pointer; position: absolute; top: 20px; right: 30px;
       transition: color 0.3s;
     }
     .close-btn:hover { color: #ff5f6d; }
 
     .other-members {
-      max-width: 700px;
-      margin: 0 auto;
-      text-align: center;
-      font-weight: 700;
-      font-size: 1.1rem;
-      user-select: none;
+      max-width: 700px; margin: 0 auto; text-align: center;
+      font-weight: 700; font-size: 1.1rem; user-select: none;
     }
     .other-members a {
-      color: #000;
-      text-decoration: none;
-      margin: 0 12px;
-      padding: 8px 12px;
-      border-radius: 8px;
-      background: #f0f0f0;
-      transition: background-color 0.3s;
-      display: inline-block;
+      color: #000; text-decoration: none; margin: 0 12px;
+      padding: 8px 12px; border-radius: 8px; background: #f0f0f0;
+      transition: background-color 0.3s; display: inline-block;
     }
-    .other-members a:hover {
-      background: #ffd5c2;
-      color: #b3302a;
-    }
+    .other-members a:hover { background: #ffd5c2; color: #b3302a; }
 
     @media (max-width: 600px) {
       .poems-grid { grid-template-columns: 1fr; }
       .back-button { left: 15px; font-size: 2.5rem; }
     }
+
+    #loading-screen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #000; display: flex; justify-content: center; align-items: center;
+      z-index: 3000;
+    }
+    .block-container { display: flex; gap: 15px; }
+    .block { width: 25px; height: 25px; background: linear-gradient(45deg, #ff5f6d, #ffc371);
+      animation: blockAnim 1s infinite ease-in-out;
+    }
+    .b1 { animation-delay: 0s; } .b2 { animation-delay: 0.2s; } .b3 { animation-delay: 0.4s; }
+    .b4 { animation-delay: 0.6s; } .b5 { animation-delay: 0.8s; }
+    @keyframes blockAnim { 0%,100%{transform:scale(1) rotate(0deg);opacity:0.5;}50%{transform:scale(1.5) rotate(90deg);opacity:1;} }
   </style>
 </head>
 <body>
+
+  <div id="loading-screen">
+    <div class="block-container">
+      <div class="block b1"></div>
+      <div class="block b2"></div>
+      <div class="block b3"></div>
+      <div class="block b4"></div>
+      <div class="block b5"></div>
+    </div>
+  </div>
+
   <nav class="main-nav"></nav>
   <a href="index.html" class="back-button" aria-label="Back to main website" title="Back to Home">&#8592;</a>
 
   <div class="content">
     <h1>Ariane's Poems</h1>
     <div class="poems-grid">
-      <div class="poem-box" onclick="openPoem('poem1')">
-        <img src="ArianePoem1.png" alt="Poem 1" />
-        <div class="poem-title">Buntod Ree: The Place You'll Love To Be</div>
-      </div>
-      <div class="poem-box" onclick="openPoem('poem2')">
-        <img src="Arianepoem2.png" alt="Poem 2" />
-        <div class="poem-title">The Silent Blade</div>
-      </div>
-      <div class="poem-box" onclick="openPoem('poem3')">
-        <img src="ArianePoem3.png" alt="Poem 3" />
-        <div class="poem-title">Underneath the Blossom Tree: A Wish for Joyful Laughs</div>
-      </div>
-      <div class="poem-box" onclick="openPoem('poem4')">
-        <img src="ArianePoem4.png" alt="Poem 4" />
-        <div class="poem-title">The Poet's Unwritten Verse</div>
-      </div>
+      <div class="poem-box" onclick="openPoem('poem1')"><img src="ArianePoem1.png" alt="Poem 1" /><div class="poem-title">Buntod Reef: The Place You'll Love To Be</div></div>
+      <div class="poem-box" onclick="openPoem('poem2')"><img src="ArianePoem2.png" alt="Poem 2" /><div class="poem-title">The Silent Blade</div></div>
+      <div class="poem-box" onclick="openPoem('poem3')"><img src="ArianePoem3.png" alt="Poem 3" /><div class="poem-title">Underneath the Blossom Tree: A Wish for Joyful Laughs</div></div>
+      <div class="poem-box" onclick="openPoem('poem4')"><img src="ArianePoem4.png" alt="Poem 4" /><div class="poem-title">The Poet's Unwritten Verse</div></div>
+    </div>
+
+    <h1>Ariane's Homereading Reports</h1>
+    <div class="poems-grid">
+      <div class="poem-box" onclick="openPoem('poem5')"><div class="poem-title">Homereading Report 1</div></div>
+      <div class="poem-box" onclick="openPoem('poem6')"><div class="poem-title">Homereading Report 2</div></div>
+      <div class="poem-box" onclick="openPoem('poem7')"><div class="poem-title">Homereading Report 3</div></div>
+      <div class="poem-box" onclick="openPoem('poem8')"><div class="poem-title">Homereading Report 4</div></div>
+      <div class="poem-box" onclick="openPoem('poem9')"><div class="poem-title">Homereading Report 5</div></div>
+      <div class="poem-box" onclick="openPoem('poem10')"><div class="poem-title">Homereading Report 6</div></div>
+      <div class="poem-box" onclick="openPoem('poem11')"><div class="poem-title">Homereading Report 7</div></div>
+    </div>
+
+    <h1>Ariane's Other Works</h1>
+    <div class="poems-grid">
+      <div class="poem-box" onclick="openPoem('poem12')"><div class="poem-title">Speech</div></div>
+      <div class="poem-box" onclick="openPoem('poem13')"><div class="poem-title">Article</div></div>
     </div>
 
     <div class="other-members">
@@ -216,7 +153,6 @@
     </div>
   </div>
 
-  <!-- Poem popups -->
   <div id="poem1" class="poem-popup" onclick="overlayClose(event)">
     <div class="poem-content">
       <span class="close-btn" onclick="closePoem()">&times;</span>
@@ -253,11 +189,10 @@
       </p>
     </div>
   </div>
-
   <div id="poem2" class="poem-popup" onclick="overlayClose(event)">
     <div class="poem-content">
       <span class="close-btn" onclick="closePoem()">&times;</span>
-      <h2>The Silent blade</h2>
+      <h2>The Silent Blade</h2>
       <p>
         The walks alone where shadows creep. <br>
         A watchful soul, his silence deep. <br>
@@ -282,11 +217,10 @@
       </p>
     </div>
   </div>
-
   <div id="poem3" class="poem-popup" onclick="overlayClose(event)">
     <div class="poem-content">
       <span class="close-btn" onclick="closePoem()">&times;</span>
-      <h2>Undernearth The Blossom Tree: A Wish of Joyful Laughs</h2>
+      <h2>Underneath the Blossom Tree: A Wish for Joyful Laughs</h2>
       <p>
         Underneath the blossom tree, <br>
         there we once met with promises to keep. <br>
@@ -304,16 +238,14 @@
         All you gave now is coldness stares. <br>
         Wish we go back to what were before, <br>
         With joyful laughs, and love one another. 
-
       </p>
     </div>
   </div>
-
   <div id="poem4" class="poem-popup" onclick="overlayClose(event)">
     <div class="poem-content">
       <span class="close-btn" onclick="closePoem()">&times;</span>
       <h2>The Poet's Unwritten Verse</h2>
-      <p>
+     <p>
         I longed to be the poem, flowing, free, <br>
         A whispered verse for all the world to see, <br>
         A song of starlight, wild as the sea, <br>
@@ -346,31 +278,224 @@
     </div>
   </div>
 
+<div id="poem5" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+    <h2>Homereading report 1</h2>
+    <p>
+      <strong>Part 1: Book Information</strong><br>
+      Title: The Secret Garden<br>
+      Author: Frances Hodgson Burnett<br>
+      Genre: Children's Literature, Classic Literature<br>
+      Pages: 331
+    </p>
+    <p>
+      <strong>Part 2: Summary</strong><br>
+      "The Secret Garden" tells the story of Mary Lennox, a spoiled and neglected young girl who is orphaned and sent to live with her uncle in Yorkshire, England. Mary discovers a hidden garden and, with help from Dickon and her cousin Colin, restores it, learning about friendship, healing, and personal growth.
+    </p>
+    <p>
+      <strong>Part 3: Main Characters</strong><br>
+      Mary Lennox: A sour girl transformed by friendship and nature.<br>
+      Colin Craven: Mary's cousin who regains health and confidence through the garden.
+    </p>
+    <p>
+      <strong>Part 4: Reflection</strong><br>
+      The story teaches the transformative power of nature and friendship. In the future, I will spend more time in nature and foster meaningful connections with others.
+    </p>
+    <p><strong>Part 5: Book Rating</strong> ★★★★★</p>
+  </div>
+</div>
+
+<div id="poem6" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+    <h2>Homereading report 2</h2>
+    <p>
+      <strong>Part 1: Book Information</strong><br>
+      Title: Pride and Prejudice<br>
+      Author: Jane Austen<br>
+      Genre: Classic Literature, Romance<br>
+      Pages: 432
+    </p>
+    <p>
+      <strong>Part 2: Summary</strong><br>
+      "Pride and Prejudice" follows Elizabeth Bennet and Mr. Darcy as they navigate love, social expectations, and personal growth in early 19th century England.
+    </p>
+    <p>
+      <strong>Part 3: Main Characters</strong><br>
+      Elizabeth Bennet: Witty and independent, overcomes pride and prejudice.<br>
+      Mr. Darcy: Proud yet caring, learns humility and love.
+    </p>
+    <p>
+      <strong>Part 4: Reflection</strong><br>
+      Lessons include overcoming prejudice and valuing self-awareness. I will strive to approach others with compassion and openness.
+    </p>
+    <p><strong>Part 5: Book Rating</strong> ★★★★★</p>
+  </div>
+</div>
+
+<div id="poem7" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+    <h2>Homereading report 3</h2>
+    <p>
+      <strong>Part 1: Book Information</strong><br>
+      Title: The Hitchhiker's Guide to the Galaxy<br>
+      Author: Douglas Adams<br>
+      Genre: Science Fiction, Comedy<br>
+      Pages: 224
+    </p>
+    <p>
+      <strong>Part 2: Summary</strong><br>
+      Follows Arthur Dent and Ford Prefect on a comical space adventure as they explore the galaxy and the absurdities of life, culminating in the quest for the "Ultimate Question of Life, the Universe, and Everything."
+    </p>
+    <p>
+      <strong>Part 3: Main Characters</strong><br>
+      Arthur Dent: Ordinary man, bewildered yet resilient.<br>
+      Ford Prefect: Alien researcher, witty guide through the galaxy.
+    </p>
+    <p>
+      <strong>Part 4: Reflection</strong><br>
+      Key lessons: embrace humor in absurdity, value friendship, and approach challenges with positivity.
+    </p>
+    <p><strong>Part 5: Book Rating</strong> ★★★★★</p>
+  </div>
+</div>
+
+
+<div id="poem8" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+    <h2>Homereading report 4</h2>
+    <p>
+      <strong>Part 1: Book Information</strong><br>
+      Title: Love & Respect: The Love She Most Desires; The Respect He Desperately Needs<br>
+      Author: Dr. Emerson Eggerichs<br>
+      Genre: Non-Fiction, Relationships, Self-Help<br>
+      Pages: 352
+    </p>
+    <p>
+      <strong>Part 2: Summary</strong><br>
+      Explains how men need respect and women need love, detailing the "Crazy Cycle" and "Energizing Cycle" in relationships. Offers practical advice to meet each other's needs and improve marital interactions.
+    </p>
+    <p>
+      <strong>Part 3: N/A</strong>
+    </p>
+    <p>
+      <strong>Part 4: Reflection</strong><br>
+      I learned the importance of understanding and meeting my partner's core needs and breaking negative cycles in relationships.
+    </p>
+    <p><strong>Part 5: Book Rating</strong> ★★★★</p>
+  </div>
+</div>
+
+<div id="poem9" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+    <h2>Homereading report 5</h2>
+    <p>
+      <strong>Part 1: Book Information</strong><br>
+      Title: Ang Mutya ng Section E Book 2<br>
+      Author: Lara Flores (eatmore2behappy)<br>
+      Genre: Teen Fiction, Romance, Humor<br>
+      Pages: Varies
+    </p>
+    <p>
+      <strong>Part 2: Summary</strong><br>
+      Continues the story of Jay-Jay navigating high school, relationships, and challenges with classmates, learning to discern true allies.
+    </p>
+    <p>
+      <strong>Part 3: Main Characters</strong><br>
+      Jasper Jean "Jay-Jay" Mariano: Resilient and kind protagonist.<br>
+      Mark Keifer Watson: Jay-Jay's charismatic love interest.
+    </p>
+    <p>
+      <strong>Part 4: Reflection</strong><br>
+      Lessons include staying true to oneself and valuing authenticity. I will be mindful of the people I trust.
+    </p>
+    <p><strong>Part 5: Book Rating</strong> ★★★★★</p>
+  </div>
+</div>
+
+<div id="poem10" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+    <h2>Homereading report 6</h2>
+    <p>
+      <strong>Part 1: Book Information</strong><br>
+      Title: Heaven Official's Blessing (天官赐福)<br>
+      Author: Mo Xiang Tong Xiu (墨香铜臭)<br>
+      Genre: Fantasy, Romance, Xianxia<br>
+      Pages: ~2400 (Chinese), ~400 per English volume
+    </p>
+    <p>
+      <strong>Part 2: Summary</strong><br>
+      Follows Xie Lian, a crown prince turned god, as he faces banishments, mysteries, and the devotion of Hua Cheng, exploring themes of redemption, perseverance, and love.
+    </p>
+    <p>
+      <strong>Part 3: Main Characters</strong><br>
+      Xie Lian: Compassionate god, embodies kindness and resilience.<br>
+      Hua Cheng: Ghost king, devoted and protective.
+    </p>
+    <p>
+      <strong>Part 4: Reflection</strong><br>
+      Teaches perseverance, compassion, and cherishing meaningful relationships.
+    </p>
+    <p><strong>Part 5: Book Rating</strong> ★★★★★</p>
+  </div>
+</div>
+<div id="poem11" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+    <h2>Homereading report 7</h2>
+    <p>
+      <strong>Part 1: Book Information</strong><br>
+      Title: Who Made Me A Princess<br>
+      Author: Plutus<br>
+      Genre: Fantasy, Romance, Isekai, Web Novel<br>
+      Pages: ~270 chapters
+    </p>
+    <p>
+      <strong>Part 2: Summary</strong><br>
+      Follows Athanasia de Alger Obelia, a woman reincarnated as a princess, striving to survive her father's court, change her tragic fate, and explore themes of family, love, and choice.
+    </p>
+    <p>
+      <strong>Part 3: Main Characters</strong><br>
+      Athanasia: Determined and resourceful protagonist.<br>
+      Claude de Alger Obelia: Cold emperor, father and antagonist.
+    </p>
+    <p>
+      <strong>Part 4: Reflection</strong><br>
+      Teaches perseverance, empathy, and compassion in the face of adversity.
+    </p>
+    <p><strong>Part 5: Book Rating</strong> ★★★★★</p>
+  </div>
+</div>
+  <div id="poem12" class="poem-popup" onclick="overlayClose(event)">
+    <div class="poem-content"><span class="close-btn" onclick="closePoem()">&times;</span><h2>Unlocking literary worlds: A journey through reading and writing</h2><p>This quarter 1, the grade 7 students of Masbate National Comprehensive High School (MNCHS) embarked on an intensive literary arts lessons, focusing on evaluating texts and composing culturally reflective works.<br><br>Through diverse lessons on poetic forms, character analysis, and literary devices, we dive deep into the heart of literature, exploring poetry's intricate elements and diverse types, from Tanaga to free verse, we identify characters, conflicts, and the rich tapestry of figures of speech, using these insights to compose our own original works reflecting Filipino culture and identity, by understanding maxims, universal truths, and socio-cultural contexts, we foster empathy, revise for cohesion, and ultimately publish poems that speak volumes.<br><br>We actively created various poems weekly, applying theoretical knowledge, and conducted seven weekly home reading reports as performance tasks, fostering critical engagement with literature.<br><br>This comprehensive approach allowed us to both understand and create compelling literary pieces, culminating in our own published works.</p></div>
+  </div>
+  <div id="poem13" class="poem-popup" onclick="overlayClose(event)">
+    <div class="poem-content"><span class="close-btn" onclick="closePoem()">&times;</span><h2>Article</h2><p>"Placeholder"</p></div>
+  </div>
+
   <script>
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loading-screen');
+      loader.style.opacity = 0;
+      loader.style.transition = 'opacity 0.5s ease';
+      setTimeout(() => loader.style.display = 'none', 500);
+    });
+
     function openPoem(id) {
       const popup = document.getElementById(id);
-      popup.classList.add('active');
-      // reset scroll to top when opening
-      const content = popup.querySelector('.poem-content');
-      if (content) content.scrollTop = 0;
-    }
-
-    function closePoem() {
-      document.querySelectorAll('.poem-popup').forEach(p => p.classList.remove('active'));
-    }
-
-    function overlayClose(event) {
-      // close only if background (overlay) clicked, not content
-      if (event.target.classList.contains('poem-popup')) {
-        closePoem();
+      if (popup) {
+        popup.classList.add('active');
+        const content = popup.querySelector('.poem-content');
+        if (content) content.scrollTop = 0;
       }
     }
+    function closePoem() { document.querySelectorAll('.poem-popup').forEach(p => p.classList.remove('active')); }
+    function overlayClose(event) { if(event.target.classList.contains('poem-popup')) closePoem(); }
   </script>
 </body>
 </html>
-
-
-
-
-
-
