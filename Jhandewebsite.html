@@ -2,221 +2,157 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Jhande's Poems</title>
+  <title>Jhande's Work</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet" />
   <style>
     html, body {
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
+      margin: 0; padding: 0; min-height: 100vh;
       font-family: 'Montserrat', sans-serif;
-      background: #fff;
-      color: #222;
+      background: #fff; color: #222;
       scroll-behavior: smooth;
     }
     nav.main-nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 60px;
-      background: #000;
-      box-sizing: border-box;
-      padding: 0 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-      z-index: 1000;
+      position: fixed; top: 0; left: 0; width: 100%; height: 60px;
+      background: #000; display: flex; justify-content: center; align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5); z-index: 1000;
     }
     .back-button {
-      position: fixed;
-      top: 60px;
-      left: 20px;
-      font-size: 3rem;
-      font-weight: 900;
-      color: #000;
-      cursor: pointer;
-      user-select: none;
-      z-index: 1000;
-      text-decoration: none;
-      line-height: 1;
-      transition: color 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: fixed; top: 60px; left: 20px;
+      font-size: 3rem; font-weight: 900; color: #000;
+      cursor: pointer; user-select: none; z-index: 1000;
+      text-decoration: none; line-height: 1;
+      transition: color 0.3s; display: flex;
+      align-items: center; justify-content: center;
     }
     .back-button:hover { color: #ff5f6d; }
     .content {
-      max-width: 900px;
-      margin: 140px auto 60px;
-      padding: 0 20px;
+      max-width: 900px; margin: 140px auto 60px; padding: 0 20px;
     }
     h1 {
-      font-weight: 700;
-      font-size: 2.8rem;
-      margin-bottom: 30px;
-      text-align: center;
-      color: #000;
-      position: relative;
+      font-weight: 700; font-size: 2.8rem; margin-bottom: 30px;
+      text-align: center; color: #000; position: relative;
     }
     h1::after {
-      content: "";
-      display: block;
-      width: 60px;
-      height: 6px;
+      content: ""; display: block; width: 60px; height: 6px;
       background: linear-gradient(90deg, #ff5f6d, #ffc371);
-      border-radius: 3px;
-      margin: 10px auto 0;
-      opacity: 0.8;
+      border-radius: 3px; margin: 10px auto 0; opacity: 0.8;
     }
     .poems-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 40px;
-      margin-bottom: 60px;
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 40px; margin-bottom: 60px;
     }
     .poem-box {
-      text-align: center;
-      background: #fafafa;
-      border-radius: 15px;
-      overflow: hidden;
+      text-align: center; background: #fafafa;
+      border-radius: 15px; overflow: hidden;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-      cursor: pointer;
+      transition: transform 0.3s ease; cursor: pointer;
     }
-    .poem-box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-    }
-    .poem-box img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      display: block;
-    }
-    .poem-title {
-      padding: 15px 10px;
-      font-weight: 700;
-      font-size: 1.3rem;
-      color: #222;
-      user-select: none;
-    }
+    .poem-box:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.2); }
+    .poem-box img { width: 100%; height: 180px; object-fit: cover; display: block; }
+    .poem-title { padding: 15px 10px; font-weight: 700; font-size: 1.3rem; color: #222; user-select: none; }
 
-    /* Poem popup (modal) */
     .poem-popup {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease;
-      z-index: 2000;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.4s ease; z-index: 2000;
     }
-    .poem-popup.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .poem-popup.active { opacity: 1; pointer-events: auto; }
     .poem-content {
-      background: #fff;
-      border-radius: 20px;
-      padding: 30px;
-      max-width: 600px;
-      width: 90%;
-      text-align: center;
+      background: #fff; border-radius: 20px; padding: 30px;
+      max-width: 600px; width: 90%; text-align: center;
       box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-      transform: translateY(30px);
-      transition: transform 0.4s ease;
-      max-height: 80vh; /* keeps long poems scrollable */
-      overflow-y: auto;
-      position: relative;
+      transform: translateY(30px); transition: transform 0.4s ease;
+      max-height: 80vh; overflow-y: auto; position: relative;
     }
-    .poem-popup.active .poem-content {
-      transform: translateY(0);
-    }
+    .poem-popup.active .poem-content { transform: translateY(0); }
     .close-btn {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #333;
-      cursor: pointer;
-      position: absolute;
-      top: 20px;
-      right: 30px;
+      font-size: 2rem; font-weight: bold; color: #333;
+      cursor: pointer; position: absolute; top: 20px; right: 30px;
       transition: color 0.3s;
     }
     .close-btn:hover { color: #ff5f6d; }
 
     .other-members {
-      max-width: 700px;
-      margin: 0 auto;
-      text-align: center;
-      font-weight: 700;
-      font-size: 1.1rem;
-      user-select: none;
+      max-width: 700px; margin: 0 auto; text-align: center;
+      font-weight: 700; font-size: 1.1rem; user-select: none;
     }
     .other-members a {
-      color: #000;
-      text-decoration: none;
-      margin: 0 12px;
-      padding: 8px 12px;
-      border-radius: 8px;
-      background: #f0f0f0;
-      transition: background-color 0.3s;
-      display: inline-block;
+      color: #000; text-decoration: none; margin: 0 12px;
+      padding: 8px 12px; border-radius: 8px; background: #f0f0f0;
+      transition: background-color 0.3s; display: inline-block;
     }
-    .other-members a:hover {
-      background: #ffd5c2;
-      color: #b3302a;
-    }
+    .other-members a:hover { background: #ffd5c2; color: #b3302a; }
 
     @media (max-width: 600px) {
       .poems-grid { grid-template-columns: 1fr; }
       .back-button { left: 15px; font-size: 2.5rem; }
     }
+
+    #loading-screen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #000; display: flex; justify-content: center; align-items: center;
+      z-index: 3000;
+    }
+    .block-container { display: flex; gap: 15px; }
+    .block { width: 25px; height: 25px; background: linear-gradient(45deg, #ff5f6d, #ffc371);
+      animation: blockAnim 1s infinite ease-in-out;
+    }
+    .b1 { animation-delay: 0s; } .b2 { animation-delay: 0.2s; } .b3 { animation-delay: 0.4s; }
+    .b4 { animation-delay: 0.6s; } .b5 { animation-delay: 0.8s; }
+    @keyframes blockAnim { 0%,100%{transform:scale(1) rotate(0deg);opacity:0.5;}50%{transform:scale(1.5) rotate(90deg);opacity:1;} }
   </style>
 </head>
 <body>
+
+  <div id="loading-screen">
+    <div class="block-container">
+      <div class="block b1"></div>
+      <div class="block b2"></div>
+      <div class="block b3"></div>
+      <div class="block b4"></div>
+      <div class="block b5"></div>
+    </div>
+  </div>
+
   <nav class="main-nav"></nav>
   <a href="index.html" class="back-button" aria-label="Back to main website" title="Back to Home">&#8592;</a>
 
   <div class="content">
     <h1>Jhande's Poems</h1>
     <div class="poems-grid">
-      <div class="poem-box" onclick="openPoem('poem1')">
-        <img src="poem1.jpg" alt="Poem 1" />
-        <div class="poem-title">Palani De Praiso: a place you'd love to be</div>
-      </div>
-      <div class="poem-box" onclick="openPoem('poem2')">
-        <img src="poem2.jpg" alt="Poem 2" />
-        <div class="poem-title">A Glimpse of Him</div>
-      </div>
-      <div class="poem-box" onclick="openPoem('poem3')">
-        <img src="poem3.jpg" alt="Poem 3" />
-        <div class="poem-title">"Deeply in love, I become so blind"</div>
-      </div>
-      <div class="poem-box" onclick="openPoem('poem4')">
-        <img src="poem4.jpg" alt="Poem 4" />
-        <div class="poem-title">"Roller Coaster"</div>
-      </div>
+      <div class="poem-box" onclick="openPoem('poem1')"><img src="Jhande1.1.jpg" alt="Poem 1" /><div class="poem-title">Palani De Praiso: a place you'd love to be</div></div>
+      <div class="poem-box" onclick="openPoem('poem2')"><img src="Jhande1.2.jpg" alt="Poem 2" /><div class="poem-title">A Glimpse of Him</div></div>
+      <div class="poem-box" onclick="openPoem('poem3')"><img src="Jhande1.3.jpg" alt="Poem 3" /><div class="poem-title">"Deeply in love, I become so blind"</div></div>
+      <div class="poem-box" onclick="openPoem('poem4')"><img src="Jhande1.4.jpg" alt="Poem 4" /><div class="poem-title">"Roller Coaster"</div></div>
+    </div>
+
+    <h1>Jhande's Homereading Reports</h1>
+    <div class="poems-grid">
+      <div class="poem-box" onclick="openPoem('poem5')"><div class="poem-title">Homereading Report 1</div></div>
+      <div class="poem-box" onclick="openPoem('poem6')"><div class="poem-title">Homereading Report 2</div></div>
+      <div class="poem-box" onclick="openPoem('poem7')"><div class="poem-title">Homereading Report 3</div></div>
+      <div class="poem-box" onclick="openPoem('poem8')"><div class="poem-title">Homereading Report 4</div></div>
+      <div class="poem-box" onclick="openPoem('poem9')"><div class="poem-title">Homereading Report 5</div></div>
+      <div class="poem-box" onclick="openPoem('poem10')"><div class="poem-title">Homereading Report 6</div></div>
+      <div class="poem-box" onclick="openPoem('poem11')"><div class="poem-title">Homereading Report 7</div></div>
+    </div>
+
+    <h1>Jhande's Other Works</h1>
+    <div class="poems-grid">
+      <div class="poem-box" onclick="openPoem('poem12')"><div class="poem-title">Speech</div></div>
+      <div class="poem-box" onclick="openPoem('poem13')"><div class="poem-title">Article</div></div>
     </div>
 
     <div class="other-members">
+      <a href="Jhandewebsite.html">Jhande</a>
       <a href="Rainewebsite.html">Raine</a>
       <a href="Julianne.html">Julianna</a>
-      <a href="PJwebsite.html">PJ</a>
       <a href="Kentwebsite.html">Kent</a>
+      <a href="PJwebsite.html">PJ</a>
       <a href="Liamwebsite.html">Liam</a>
-      <a href="Arianewebsite.html">Ariane</a>
     </div>
   </div>
 
-  <!-- Poem popups -->
   <div id="poem1" class="poem-popup" onclick="overlayClose(event)">
     <div class="poem-content">
       <span class="close-btn" onclick="closePoem()">&times;</span>
@@ -247,7 +183,6 @@
       </p>
     </div>
   </div>
-
   <div id="poem2" class="poem-popup" onclick="overlayClose(event)">
     <div class="poem-content">
       <span class="close-btn" onclick="closePoem()">&times;</span>
@@ -284,7 +219,6 @@
       </p>
     </div>
   </div>
-
   <div id="poem3" class="poem-popup" onclick="overlayClose(event)">
     <div class="poem-content">
       <span class="close-btn" onclick="closePoem()">&times;</span>
@@ -309,11 +243,9 @@
       </p>
     </div>
   </div>
-
   <div id="poem4" class="poem-popup" onclick="overlayClose(event)">
     <div class="poem-content">
       <span class="close-btn" onclick="closePoem()">&times;</span>
-      <h2>"Roller Coaster"</h2>
       <p>
         Was it all casual? <br>
         The times we've been together. <br>
@@ -341,29 +273,274 @@
     </div>
   </div>
 
+<div id="poem5" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+    <h2>Home Reading Report 1</h2>
+    <p>
+     "Placeholder"
+    </p>
+  </div>
+</div>
+
+<div id="poem6" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+    <h2>Home Reading Report 2</h2>
+    <p>
+    <strong>Part 1: Book Information</strong><br>
+    Title: Matilda<br>
+    Author: Roald Dahl<br>
+    Genre: Children’s Fiction, Comedy, Fantasy<br>
+    Pages: 240
+    </p>
+    <p>
+    <strong>Part 2: Summary</strong><br>
+     Matilda is a brilliant girl who loves reading, but her parents do not value her intelligence. At school she discovers she has the power to move objects with her mind. With the help of her kind teacher Miss Honey, Matilda stands up to the cruel headmistress Miss Trunchbull. In the end, Miss Honey adopts Matilda and gives her a loving home.
+    </p>
+    <p>
+    <strong>Part 3: Main Characters</strong><br>
+     Matilda Wormwood – A smart and brave girl who loves learning.<br>
+     Miss Honey – A kind teacher who believes in Matilda.
+    </p>
+    <p>
+    <strong>Part 4: Reflection</strong><br>
+     The story teaches that intelligence and kindness are stronger than cruelty and that education is important.
+    </p>
+    <p>
+    <strong>Part 5: Book Rating</strong> ★★★★★</p>/p>
+  </div>
+</div>
+
+<div id="poem7" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+<h2>Home Reading Report 3</h2>
+
+<p>
+<strong>Part 1: Book Information</strong><br>
+Title: The Little Prince<br>
+Author: Antoine de Saint-Exupéry<br>
+Genre: Fantasy / Philosophy<br>
+Pages: 96
+</p>
+
+<p>
+<strong>Part 2: Summary</strong><br>
+A pilot crashes in the desert and meets the Little Prince, a boy from another planet. The prince shares stories about the strange adults he met on different planets and the rose he loves. Through their conversations, the pilot learns about friendship, love, and the importance of seeing with the heart.
+</p>
+
+<p>
+<strong>Part 3: Main Characters</strong><br>
+The Little Prince – Curious and wise boy who values love and friendship.<br>
+The Pilot – Learns important life lessons from the prince.
+</p>
+
+<p>
+<strong>Part 4: Reflection</strong><br>
+The story reminds us that love and friendship are more important than material things.
+</p>
+
+<p><strong>Part 5: Book Rating</strong> ★★★★★</p>
+  </div>
+</div>
+
+<div id="poem8" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+<h2>Home Reading Report 4</h2>
+
+<p>
+<strong>Part 1: Book Information</strong><br>
+Title: The Giving Tree<br>
+Author: Shel Silverstein<br>
+Genre: Children’s Fiction / Allegory<br>
+Pages: 64
+</p>
+
+<p>
+<strong>Part 2: Summary</strong><br>
+The story is about a tree who loves a boy very much. As the boy grows older, he takes the tree’s apples, branches, and trunk. Even when only a stump remains, the tree is still happy to give the boy a place to rest.
+</p>
+
+<p>
+<strong>Part 3: Main Characters</strong><br>
+The Tree – Generous and selfless.<br>
+The Boy – Represents human needs and desires.
+</p>
+
+<p>
+<strong>Part 4: Reflection</strong><br>
+The story teaches the meaning of unconditional love and the importance of appreciating sacrifices made for us.
+</p>
+
+<p><strong>Part 5: Book Rating</strong> ★★★★☆</p>
+    <p>
+      <strong>Part 4: Reflection</strong><br>
+      The book teaches resilience and the importance of finding connection and support during difficult times.
+    </p>
+    <p><strong>Part 5: Book Rating</strong> ★★★★★</p>
+  </div>
+</div>
+
+<div id="poem9" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+<h2>Home Reading Report 5</h2>
+
+<p>
+<strong>Part 1: Book Information</strong><br>
+Title: Cinderella<br>
+Author: Charles Perrault<br>
+Genre: Fairy Tale / Romance<br>
+Pages: 32
+</p>
+
+<p>
+<strong>Part 2: Summary</strong><br>
+Cinderella is treated badly by her stepmother and stepsisters. With the help of her Fairy Godmother, she attends the royal ball where the prince falls in love with her. After searching for the owner of the glass slipper, the prince finds Cinderella and marries her.
+</p>
+
+<p>
+<strong>Part 3: Main Characters</strong><br>
+Cinderella – Kind and patient despite hardship.<br>
+The Prince – Falls in love with Cinderella’s goodness.
+</p>
+
+<p>
+<strong>Part 4: Reflection</strong><br>
+The story teaches that kindness and patience will be rewarded.
+</p>
+
+<p><strong>Part 5: Book Rating</strong> ★★★★★</p>
+  </div>
+</div>
+
+
+<div id="poem10" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+<h2>Home Reading Report 6</h2>
+
+<p>
+<strong>Part 1: Book Information</strong><br>
+Title: Beauty and the Beast<br>
+Author: Jeanne-Marie Leprince de Beaumont<br>
+Genre: Fairy Tale / Fantasy<br>
+Pages: 48
+</p>
+
+<p>
+<strong>Part 2: Summary</strong><br>
+Belle agrees to live with a Beast to save her father. Although the Beast looks frightening, Belle discovers he has a kind heart. Her love eventually breaks the spell and turns the Beast back into a prince.
+</p>
+
+<p>
+<strong>Part 3: Main Characters</strong><br>
+Belle – Kind and brave girl who sees the good in others.<br>
+The Beast – Learns to become kind and caring.
+</p>
+
+<p>
+<strong>Part 4: Reflection</strong><br>
+The story teaches that true beauty comes from the heart, not from appearance.
+</p>
+
+<p><strong>Part 5: Book Rating</strong> ★★★★★</p>
+  </div>
+</div>
+
+<div id="poem10" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+    <h2>Homereading Report 5</h2>
+    <p>
+      <strong>Part 1: Book Information</strong><br>
+      Title: Lemonade & Love Potions<br>
+      Author: Bells Falls<br>
+      Genre: Fantasy, Romance<br>
+      Pages: 60
+    </p>
+    <p>
+      <strong>Part 2: Summary</strong><br>
+      The story follows a small-town witch who runs a potion shop. When love potions accidentally cause chaos, she teams up with a newcomer to fix the magic while discovering secrets about her family's magical legacy.
+    </p>
+    <p>
+      <strong>Part 3: Main Characters</strong><br>
+      Ruby Hartwood – A witty and independent witch.<br>
+      Declan Backthorn – A mysterious outsider with hidden magical talents.
+    </p>
+    <p>
+      <strong>Part 4: Reflection</strong><br>
+      The story mixes humor and fantasy with a magical small-town setting. The romance felt rushed but the creative magic made the story fun.
+    </p>
+    <p><strong>Part 5: Book Rating</strong> ★★★★☆</p>
+  </div>
+</div>
+
+<div id="poem11" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+<h2>Home Reading Report 7</h2>
+
+<p>
+<strong>Part 1: Book Information</strong><br>
+Title: The Tale of Peter Rabbit<br>
+Author: Beatrix Potter<br>
+Genre: Children’s Fiction / Adventure<br>
+Pages: 56
+</p>
+
+<p>
+<strong>Part 2: Summary</strong><br>
+Peter Rabbit disobeys his mother and sneaks into Mr. McGregor’s garden to eat vegetables. He gets chased and barely escapes after losing his shoes and jacket. Tired and frightened, Peter returns home and learns an important lesson.
+</p>
+
+<p>
+<strong>Part 3: Main Characters</strong><br>
+Peter Rabbit – Curious bunny who learns from his mistake.<br>
+Mr. McGregor – The farmer protecting his garden.
+</p>
+
+<p>
+<strong>Part 4: Reflection</strong><br>
+The story reminds us to listen to our parents and learn from our mistakes.
+</p>
+
+<p><strong>Part 5: Book Rating</strong> ★★★★☆</p>
+  </div>
+</div>
+
+  <div id="poem12" class="poem-popup" onclick="overlayClose(event)">
+    <div class="poem-content"><span class="close-btn" onclick="closePoem()">&times;</span>
+      <h2>"Placeholder"</h2>
+       <p>
+"Placeholder"
+       </p>
+    </div>
+  </div>
+  <div id="poem13" class="poem-popup" onclick="overlayClose(event)">
+    <div class="poem-content"><span class="close-btn" onclick="closePoem()">&times;</span><h2>Article</h2><p>"Placeholder"</p></div>
+  </div>
+
   <script>
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loading-screen');
+      loader.style.opacity = 0;
+      loader.style.transition = 'opacity 0.5s ease';
+      setTimeout(() => loader.style.display = 'none', 500);
+    });
+
     function openPoem(id) {
       const popup = document.getElementById(id);
-      popup.classList.add('active');
-      // reset scroll to top when opening
-      const content = popup.querySelector('.poem-content');
-      if (content) content.scrollTop = 0;
-    }
-
-    function closePoem() {
-      document.querySelectorAll('.poem-popup').forEach(p => p.classList.remove('active'));
-    }
-
-    function overlayClose(event) {
-      // close only if background (overlay) clicked, not content
-      if (event.target.classList.contains('poem-popup')) {
-        closePoem();
+      if (popup) {
+        popup.classList.add('active');
+        const content = popup.querySelector('.poem-content');
+        if (content) content.scrollTop = 0;
       }
     }
+    function closePoem() { document.querySelectorAll('.poem-popup').forEach(p => p.classList.remove('active')); }
+    function overlayClose(event) { if(event.target.classList.contains('poem-popup')) closePoem(); }
   </script>
 </body>
 </html>
-
-
-
-
