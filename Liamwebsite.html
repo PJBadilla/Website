@@ -2,225 +2,161 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Liam's Poems</title>
+  <title>Liam's Work</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet" />
   <style>
     html, body {
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
+      margin: 0; padding: 0; min-height: 100vh;
       font-family: 'Montserrat', sans-serif;
-      background: #fff;
-      color: #222;
+      background: #fff; color: #222;
       scroll-behavior: smooth;
     }
     nav.main-nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 60px;
-      background: #000;
-      box-sizing: border-box;
-      padding: 0 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-      z-index: 1000;
+      position: fixed; top: 0; left: 0; width: 100%; height: 60px;
+      background: #000; display: flex; justify-content: center; align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5); z-index: 1000;
     }
     .back-button {
-      position: fixed;
-      top: 60px;
-      left: 20px;
-      font-size: 3rem;
-      font-weight: 900;
-      color: #000;
-      cursor: pointer;
-      user-select: none;
-      z-index: 1000;
-      text-decoration: none;
-      line-height: 1;
-      transition: color 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: fixed; top: 60px; left: 20px;
+      font-size: 3rem; font-weight: 900; color: #000;
+      cursor: pointer; user-select: none; z-index: 1000;
+      text-decoration: none; line-height: 1;
+      transition: color 0.3s; display: flex;
+      align-items: center; justify-content: center;
     }
     .back-button:hover { color: #ff5f6d; }
     .content {
-      max-width: 900px;
-      margin: 140px auto 60px;
-      padding: 0 20px;
+      max-width: 900px; margin: 140px auto 60px; padding: 0 20px;
     }
     h1 {
-      font-weight: 700;
-      font-size: 2.8rem;
-      margin-bottom: 30px;
-      text-align: center;
-      color: #000;
-      position: relative;
+      font-weight: 700; font-size: 2.8rem; margin-bottom: 30px;
+      text-align: center; color: #000; position: relative;
     }
     h1::after {
-      content: "";
-      display: block;
-      width: 60px;
-      height: 6px;
+      content: ""; display: block; width: 60px; height: 6px;
       background: linear-gradient(90deg, #ff5f6d, #ffc371);
-      border-radius: 3px;
-      margin: 10px auto 0;
-      opacity: 0.8;
+      border-radius: 3px; margin: 10px auto 0; opacity: 0.8;
     }
     .poems-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 40px;
-      margin-bottom: 60px;
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 40px; margin-bottom: 60px;
     }
     .poem-box {
-      text-align: center;
-      background: #fafafa;
-      border-radius: 15px;
-      overflow: hidden;
+      text-align: center; background: #fafafa;
+      border-radius: 15px; overflow: hidden;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-      cursor: pointer;
+      transition: transform 0.3s ease; cursor: pointer;
     }
-    .poem-box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-    }
-    .poem-box img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      display: block;
-    }
-    .poem-title {
-      padding: 15px 10px;
-      font-weight: 700;
-      font-size: 1.3rem;
-      color: #222;
-      user-select: none;
-    }
+    .poem-box:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.2); }
+    .poem-box img { width: 100%; height: 180px; object-fit: cover; display: block; }
+    .poem-title { padding: 15px 10px; font-weight: 700; font-size: 1.3rem; color: #222; user-select: none; }
 
-    /* Poem popup (modal) */
     .poem-popup {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease;
-      z-index: 2000;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.4s ease; z-index: 2000;
     }
-    .poem-popup.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .poem-popup.active { opacity: 1; pointer-events: auto; }
     .poem-content {
-      background: #fff;
-      border-radius: 20px;
-      padding: 30px;
-      max-width: 600px;
-      width: 90%;
-      text-align: center;
+      background: #fff; border-radius: 20px; padding: 30px;
+      max-width: 600px; width: 90%; text-align: center;
       box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-      transform: translateY(30px);
-      transition: transform 0.4s ease;
-      max-height: 80vh; /* keeps long poems scrollable */
-      overflow-y: auto;
-      position: relative;
+      transform: translateY(30px); transition: transform 0.4s ease;
+      max-height: 80vh; overflow-y: auto; position: relative;
     }
-    .poem-popup.active .poem-content {
-      transform: translateY(0);
-    }
+    .poem-popup.active .poem-content { transform: translateY(0); }
     .close-btn {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #333;
-      cursor: pointer;
-      position: absolute;
-      top: 20px;
-      right: 30px;
+      font-size: 2rem; font-weight: bold; color: #333;
+      cursor: pointer; position: absolute; top: 20px; right: 30px;
       transition: color 0.3s;
     }
     .close-btn:hover { color: #ff5f6d; }
 
     .other-members {
-      max-width: 700px;
-      margin: 0 auto;
-      text-align: center;
-      font-weight: 700;
-      font-size: 1.1rem;
-      user-select: none;
+      max-width: 700px; margin: 0 auto; text-align: center;
+      font-weight: 700; font-size: 1.1rem; user-select: none;
     }
     .other-members a {
-      color: #000;
-      text-decoration: none;
-      margin: 0 12px;
-      padding: 8px 12px;
-      border-radius: 8px;
-      background: #f0f0f0;
-      transition: background-color 0.3s;
-      display: inline-block;
+      color: #000; text-decoration: none; margin: 0 12px;
+      padding: 8px 12px; border-radius: 8px; background: #f0f0f0;
+      transition: background-color 0.3s; display: inline-block;
     }
-    .other-members a:hover {
-      background: #ffd5c2;
-      color: #b3302a;
-    }
+    .other-members a:hover { background: #ffd5c2; color: #b3302a; }
 
     @media (max-width: 600px) {
       .poems-grid { grid-template-columns: 1fr; }
       .back-button { left: 15px; font-size: 2.5rem; }
     }
+
+    #loading-screen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #000; display: flex; justify-content: center; align-items: center;
+      z-index: 3000;
+    }
+    .block-container { display: flex; gap: 15px; }
+    .block { width: 25px; height: 25px; background: linear-gradient(45deg, #ff5f6d, #ffc371);
+      animation: blockAnim 1s infinite ease-in-out;
+    }
+    .b1 { animation-delay: 0s; } .b2 { animation-delay: 0.2s; } .b3 { animation-delay: 0.4s; }
+    .b4 { animation-delay: 0.6s; } .b5 { animation-delay: 0.8s; }
+    @keyframes blockAnim { 0%,100%{transform:scale(1) rotate(0deg);opacity:0.5;}50%{transform:scale(1.5) rotate(90deg);opacity:1;} }
   </style>
 </head>
 <body>
+
+  <div id="loading-screen">
+    <div class="block-container">
+      <div class="block b1"></div>
+      <div class="block b2"></div>
+      <div class="block b3"></div>
+      <div class="block b4"></div>
+      <div class="block b5"></div>
+    </div>
+  </div>
+
   <nav class="main-nav"></nav>
   <a href="index.html" class="back-button" aria-label="Back to main website" title="Back to Home">&#8592;</a>
 
   <div class="content">
     <h1>Liam's Poems</h1>
     <div class="poems-grid">
-      <div class="poem-box" onclick="openPoem('poem1')">
-        <img src="poem1.jpg" alt="Poem 1" />
-        <div class="poem-title">Winvel's a place you need to be</div>
-      </div>
-      <div class="poem-box" onclick="openPoem('poem2')">
-        <img src="poem2.jpg" alt="Poem 2" />
-        <div class="poem-title">Iron man and Me</div>
-      </div>
-      <div class="poem-box" onclick="openPoem('poem3')">
-        <img src="poem3.jpg" alt="Poem 3" />
-        <div class="poem-title">Dog at risk</div>
-      </div>
-      <div class="poem-box" onclick="openPoem('poem4')">
-        <img src="poem4.jpg" alt="Poem 4" />
-        <div class="poem-title">A canvas of Me</div>
-      </div>
+      <div class="poem-box" onclick="openPoem('poem1')"><img src="Jhande1.1.jpg" alt="Poem 1" /><div class="poem-title">Winvel's, a place you need to be</div></div>
+      <div class="poem-box" onclick="openPoem('poem2')"><img src="Jhande1.2.jpg" alt="Poem 2" /><div class="poem-title">Iron man and Me</div></div>
+      <div class="poem-box" onclick="openPoem('poem3')"><img src="Jhande1.3.jpg" alt="Poem 3" /><div class="poem-title">Dog at risk</div></div>
+      <div class="poem-box" onclick="openPoem('poem4')"><img src="Jhande1.4.jpg" alt="Poem 4" /><div class="poem-title">A canvas of me</div></div>
+    </div>
+
+    <h1>Liam's Homereading Reports</h1>
+    <div class="poems-grid">
+      <div class="poem-box" onclick="openPoem('poem5')"><div class="poem-title">Homereading Report 1</div></div>
+      <div class="poem-box" onclick="openPoem('poem6')"><div class="poem-title">Homereading Report 2</div></div>
+      <div class="poem-box" onclick="openPoem('poem7')"><div class="poem-title">Homereading Report 3</div></div>
+      <div class="poem-box" onclick="openPoem('poem8')"><div class="poem-title">Homereading Report 4</div></div>
+      <div class="poem-box" onclick="openPoem('poem9')"><div class="poem-title">Homereading Report 5</div></div>
+      <div class="poem-box" onclick="openPoem('poem10')"><div class="poem-title">Homereading Report 6</div></div>
+      <div class="poem-box" onclick="openPoem('poem11')"><div class="poem-title">Homereading Report 7</div></div>
+    </div>
+
+    <h1>Liam's Other Works</h1>
+    <div class="poems-grid">
+      <div class="poem-box" onclick="openPoem('poem12')"><div class="poem-title">Speech</div></div>
+      <div class="poem-box" onclick="openPoem('poem13')"><div class="poem-title">Article</div></div>
     </div>
 
     <div class="other-members">
       <a href="Jhandewebsite.html">Jhande</a>
       <a href="Rainewebsite.html">Raine</a>
       <a href="Julianne.html">Julianna</a>
-      <a href="PJwebsite.html">PJ</a>
       <a href="Kentwebsite.html">Kent</a>
-      <a href="Arianewebsite.html">Ariane</a>
+      <a href="PJwebsite.html">PJ</a>
+      <a href="Liamwebsite.html">Liam</a>
     </div>
   </div>
 
-  <!-- Poem popups -->
   <div id="poem1" class="poem-popup" onclick="overlayClose(event)">
     <div class="poem-content">
       <span class="close-btn" onclick="closePoem()">&times;</span>
-      <h2>Winvel's a place you need to be</h2>
+   <h2>Winvel's a place you need to be</h2>
       <p>
         In Masbate, where memories resides, <br>
         Winvel's stand proud with nothing to hide. <br>
@@ -247,11 +183,10 @@
       </p>
     </div>
   </div>
-
   <div id="poem2" class="poem-popup" onclick="overlayClose(event)">
     <div class="poem-content">
       <span class="close-btn" onclick="closePoem()">&times;</span>
-      <h2>Iron man and Me</h2>
+       <h2>Iron man and Me</h2>
       <p>
         From childhood days to teenage years, you taught me to be brave, <br>
         To do what's right, to help the weak, and choose the lives we save. <br>
@@ -260,7 +195,6 @@
       </p>
     </div>
   </div>
-
   <div id="poem3" class="poem-popup" onclick="overlayClose(event)">
     <div class="poem-content">
       <span class="close-btn" onclick="closePoem()">&times;</span>
@@ -279,7 +213,6 @@
       </p>
     </div>
   </div>
-
   <div id="poem4" class="poem-popup" onclick="overlayClose(event)">
     <div class="poem-content">
       <span class="close-btn" onclick="closePoem()">&times;</span>
@@ -305,32 +238,247 @@
     </div>
   </div>
 
+<div id="poem5" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+    <h2>Home Reading Report 1</h2>
+    <p>
+     "Placeholder"
+    </p>
+  </div>
+</div>
+
+<div id="poem6" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+    <h2>Home Reading Report 2</h2>
+    <p>
+"Placeholder"
+    </p>
+  </div>
+</div>
+
+<div id="poem7" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+<h2>Home Reading Report 3</h2>
+
+<p>
+<strong>Part 1: Book Information</strong><br>
+Title: The Little Prince<br>
+Author: Antoine de Saint-Exupéry<br>
+Genre: Fantasy / Philosophy<br>
+Pages: 96
+</p>
+
+<p>
+<strong>Part 2: Summary</strong><br>
+A pilot crashes in the desert and meets the Little Prince, a boy from another planet. The prince shares stories about the strange adults he met on different planets and the rose he loves. Through their conversations, the pilot learns about friendship, love, and the importance of seeing with the heart.
+</p>
+
+<p>
+<strong>Part 3: Main Characters</strong><br>
+The Little Prince – Curious and wise boy who values love and friendship.<br>
+The Pilot – Learns important life lessons from the prince.
+</p>
+
+<p>
+<strong>Part 4: Reflection</strong><br>
+The story reminds us that love and friendship are more important than material things.
+</p>
+
+<p><strong>Part 5: Book Rating</strong> ★★★★★</p>
+  </div>
+</div>
+
+<div id="poem8" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+<h2>Home Reading Report 4</h2>
+
+   <p><strong>Part 1: Book Information</strong><br>
+    Title of the Book: Check and Mate<br>
+    Author's Name: Ali Hazelwood<br>
+    Genre: Romance / Young Adult<br>
+    Number of Pages: 336
+    </p>
+
+    <p><strong>Part 2: Summary</strong><br>
+    The story is about Mallory, a girl who stopped playing chess because of her past.
+    She plays again and defeats a champion named Nolan.
+    She returns to competitions and learns to believe in herself again.
+    </p>
+
+    <p><strong>Part 3: Main Characters</strong><br>
+    Mallory – A girl who learns to face her fears.<br>
+    Nolan – A chess champion who supports Mallory.
+    </p>
+
+    <p><strong>Part 4: Reflection</strong><br>
+    I learned that we should not give up on things we love.
+    Confidence and hard work help us succeed.
+    I will try to believe in myself more.
+    </p>
+
+    <p><strong>Part 5: Book Rating</strong><br>
+    ★★★★★
+    </p>
+
+  </div>
+</div>
+
+<div id="poem9" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+<h2>Home Reading Report 5</h2>
+
+  <p><strong>Part 1: Book Information</strong><br>
+    Title of the Book: Game On<br>
+    Author's Name: Bali Rai<br>
+    Genre: Fiction / Sports<br>
+    Number of Pages: 120
+    </p>
+
+    <p><strong>Part 2: Summary</strong><br>
+    The story is about a teenager who loves sports and wants to prove himself.
+    He faces challenges in school and with his friends,
+    but he keeps trying to improve and reach his goals.
+    </p>
+
+    <p><strong>Part 3: Main Characters</strong><br>
+    The main character – A determined boy who wants to succeed in sports.
+    </p>
+
+    <p><strong>Part 4: Reflection</strong><br>
+    I learned that practice and patience are important.
+    Even if life is hard, we should keep going.
+    I will try to be more determined in my goals.
+    </p>
+
+    <p><strong>Part 5: Book Rating</strong><br>
+    ★★★★☆
+    </p>
+
+  </div>
+</div>
+
+
+<div id="poem10" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+<h2>Home Reading Report 6</h2>
+
+  <p><strong>Part 1: Book Information</strong><br>
+    Title of the Book: Compton Valance – The Time Traveling Sandwich Bites Back<br>
+    Author's Name: Matt Brown<br>
+    Genre: Adventure / Comedy<br>
+    Number of Pages: 192
+    </p>
+
+    <p><strong>Part 2: Summary</strong><br>
+    This story is about Compton Valance, a boy who travels through time
+    with the help of a magical sandwich.
+    He goes on funny and exciting adventures while trying to fix problems
+    caused by time travel.
+    </p>
+
+    <p><strong>Part 3: Main Characters</strong><br>
+    Compton Valance – A funny and brave boy who travels through time.
+    </p>
+
+    <p><strong>Part 4: Reflection</strong><br>
+    I learned that adventures can teach us lessons.
+    We should be brave and face problems.
+    I will try to be more confident when facing challenges.
+    </p>
+
+    <p><strong>Part 5: Book Rating</strong><br>
+    ★★★★☆
+    </p>
+  </div>
+</div>
+
+<div id="poem10" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+    <h2>Homereading Report 5</h2>
+    <p>
+"Placeholder"
+    </p>
+  </div>
+</div>
+
+<div id="poem11" class="poem-popup" onclick="overlayClose(event)">
+  <div class="poem-content">
+    <span class="close-btn" onclick="closePoem()">&times;</span>
+<h2>Home Reading Report 7</h2>
+
+<p>
+"Placeholder"
+</p>
+  </div>
+</div>
+
+  <div id="poem12" class="poem-popup" onclick="overlayClose(event)">
+    <div class="poem-content"><span class="close-btn" onclick="closePoem()">&times;</span>
+      <h2>Speech</h2>
+       <p>
+"Placeholder"
+       </p>
+    </div>
+  </div>
+  <div id="poem13" class="poem-popup" onclick="overlayClose(event)">
+    <div class="poem-content"><span class="close-btn" onclick="closePoem()">&times;</span><h2>  Difference between Modern Filipino Games and Traditional games</h2>
+    <p>
+    Filipino Games, or Larong Pinoy, Reflect the Culture, Creativity, and values of Filipino Communities.
+    Traditional Filipino Games Such as Tumbang preso, Patintero, and luksong Baka can be compared and contrasted
+    with modern games. Especially digital and online games, in terms of purpose, interaction, and culture
+    </p>
+
+    <p>
+    Traditional Filipino games are usually played outdoors and require physical activity, teamwork,
+    and face-to-face interactions. For example, Patintero encourages cooperation between each team
+    and strategize, among players while Tumbang Preso Develops agility and quick thinking and reaction.
+    These games often use simple materials like slippers, chalk, or cans, showing resourcefulness and simplicity.
+    In contrast, to modern games are mostly played indoors and using different gadgets like,
+    cellphone, laptop, and gaming consoles. They focus more on virtual interaction, advanced graphics,
+    and individual achievement rather than physical touch.
+    </p>
+
+    <p>
+    Despite their differences, both traditional and modern provide entertainment and help relieve stress.
+    They also develop skills such as solving problems, competitiveness, and discipline.
+    However, larong pinoy strongly promotes Filipino Values Like pakikisama, respect, and community bonding,
+    which are less shown on online games
+    </p>
+
+    <p>
+    In conclusion, modern games are for convenience and technological excitement,
+    Traditional Filipino games preserve culture, identity, and social connection,
+    balancing both of these types of games can help younger generations to learn
+    and improve their skills while still appreciating the Filipino heritage
+     </p>
+   </div>
+  </div>
+
   <script>
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loading-screen');
+      loader.style.opacity = 0;
+      loader.style.transition = 'opacity 0.5s ease';
+      setTimeout(() => loader.style.display = 'none', 500);
+    });
+
     function openPoem(id) {
       const popup = document.getElementById(id);
-      popup.classList.add('active');
-      // reset scroll to top when opening
-      const content = popup.querySelector('.poem-content');
-      if (content) content.scrollTop = 0;
-    }
-
-    function closePoem() {
-      document.querySelectorAll('.poem-popup').forEach(p => p.classList.remove('active'));
-    }
-
-    function overlayClose(event) {
-      // close only if background (overlay) clicked, not content
-      if (event.target.classList.contains('poem-popup')) {
-        closePoem();
+      if (popup) {
+        popup.classList.add('active');
+        const content = popup.querySelector('.poem-content');
+        if (content) content.scrollTop = 0;
       }
     }
+    function closePoem() { document.querySelectorAll('.poem-popup').forEach(p => p.classList.remove('active')); }
+    function overlayClose(event) { if(event.target.classList.contains('poem-popup')) closePoem(); }
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
