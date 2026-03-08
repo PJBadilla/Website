@@ -446,10 +446,30 @@
 </div>
 
   <div id="poem12" class="poem-popup" onclick="overlayClose(event)">
-    <div class="poem-content"><span class="close-btn" onclick="closePoem()">&times;</span><h2>Unlocking literary worlds: A journey through reading and writing</h2><p>This quarter 1, the grade 7 students of Masbate National Comprehensive High School (MNCHS) embarked on an intensive literary arts lessons, focusing on evaluating texts and composing culturally reflective works.<br><br>Through diverse lessons on poetic forms, character analysis, and literary devices, we dive deep into the heart of literature, exploring poetry's intricate elements and diverse types, from Tanaga to free verse, we identify characters, conflicts, and the rich tapestry of figures of speech, using these insights to compose our own original works reflecting Filipino culture and identity, by understanding maxims, universal truths, and socio-cultural contexts, we foster empathy, revise for cohesion, and ultimately publish poems that speak volumes.<br><br>We actively created various poems weekly, applying theoretical knowledge, and conducted seven weekly home reading reports as performance tasks, fostering critical engagement with literature.<br><br>This comprehensive approach allowed us to both understand and create compelling literary pieces, culminating in our own published works.</p></div>
+    <div class="poem-content"><span class="close-btn" onclick="closePoem()">&times;</span>
+		<p>
+			"Placeholder"
+		</p>
+	</div>
   </div>
   <div id="poem13" class="poem-popup" onclick="overlayClose(event)">
-    <div class="poem-content"><span class="close-btn" onclick="closePoem()">&times;</span><h2>Article</h2><p>"Placeholder"</p></div>
+    <div class="poem-content"><span class="close-btn" onclick="closePoem()">&times;</span>		
+		<h2>MNCHS Suffers severe Damage due to Typhoon Opong</h2>h2>
+		<p>
+			Masbate National Comprehensive Highschool(MNCHS) is facing a major challenge as cleanup and repair efforts got underway, following a lot of damage caused by Typhoon Opong.
+		</p>
+		<p>
+			The typhoom with powerful winds and rains hit Masbate City on Friday, September 26, 2025.
+		</p>
+		<p>
+			Opong left several school building extremely damaged, forcing administraters to suspend classes temporarily and seek immediate help.
+		</p>
+		<p>
+			More than 9,000 students, teachers, faculty members of MNCHS are the most directly affected
+		</p>
+		<p>
+			The destruction was on the Main, and Annex campus of MNCHS - Th school is a central education hub for the city and sorrounding barangays.
+		</p></div>
   </div>
 
   <script>
@@ -461,8 +481,7 @@
     });
 
     function openPoem(id) {
-      const popup = document.getElementById(id);
-      if (popup) {
+      const popup = document.getElementById(id);      if (popup) {
         popup.classList.add('active');
         const content = popup.querySelector('.poem-content');
         if (content) content.scrollTop = 0;
@@ -473,5 +492,6 @@
   </script>
 </body>
 </html>
+
 
 
